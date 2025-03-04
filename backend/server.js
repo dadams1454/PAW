@@ -21,4 +21,16 @@ app.get("/", (req, res) => {
 
 // Start Server
 const PORT = process.env.PORT || 5000;
+const dogRoutes = require("./routes/dogRoutes");
+app.use("/api/dogs", dogRoutes);
+app.use(express.json());
+
+app.use((req, res, next) => {
+  console.log(`Incoming Request: ${req.method} ${req.url}`);
+  console.log("Request Body:", req.body);
+  next();
+});
+const authRoutes = require("./routes/authRoutes");
+app.use("/api/auth", authRoutes);
+
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
